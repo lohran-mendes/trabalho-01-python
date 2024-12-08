@@ -14,9 +14,6 @@ import os
 # Se a quantidade (em m³) de toras for igual ou maior que 1000 e menor ou igual que 2000, o desconto será de 16% (16/100); 
 # Se a quantidade (em m³) de toras for maior que 2000, não é aceito pedidos com essa quantidade de toras; 
 
-
-
-
 # Para o adicional de transporte rodoviário (1) é cobrado um valor extra de 1000 reais; 
 # Para o adicional de transporte ferroviário (2) é cobrado um valor extra de 2000 reais; 
 # Para o adicional de transporte hidroviário (3) é cobrado um valor extra de 2500 reais; 
