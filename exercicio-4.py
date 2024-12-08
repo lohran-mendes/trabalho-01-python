@@ -48,9 +48,9 @@ import copy
 # 13 - Deve-se apresentar na saída de console uma consulta por atividade em que 2 contatos exerçam a mesma atividade [EXIGÊNCIA DE SAÍDA DE CONSOLE 5 de 6]; 
 # 14 - Deve-se apresentar na saída de console uma remoção de um dos contatos e em seguida de uma consulta de todos os contatos, provando que o contato foi removido [EXIGÊNCIA DE SAÍDA DE CONSOLE 6 de 6]; 
 lista_contatos = [
-  {'id_global':'5031145','nome': 'nome', 'atividade': 'atividade', 'telefone':'telefone'}, 
-  {'id_global':'id','nome': 'nome', 'atividade': 'atividade', 'telefone':'telefone'}, 
-  {'id_global':'id2','nome': 'nome2', 'atividade': 'atividade', 'telefone':'telefone2'}
+  {'id_global':5031145,'nome': 'Lohran', 'atividade': 'ads', 'telefone':'(12) 99144-0103'}, 
+  {'id_global':5031146,'nome': 'nome', 'atividade': 'atividade', 'telefone':'telefone'}, 
+  {'id_global':5031147,'nome': 'nome2', 'atividade': 'atividade', 'telefone':'telefone2'}
   ]
 
 def cadastrar_contato(id):
@@ -63,41 +63,52 @@ def cadastrar_contato(id):
   print('\n')
   lista_contatos.append(copy.copy(contato))
   print(lista_contatos)
+  main()
   
 def consultar_contatos():
-    print('1 - Consultar Todos os Contatos')
-    print('2 - Consultar Contato por Id')
-    print('3 - Consultar Contato(s) por Atividade')
-    print('4 - Retornar ao menu')
-
     while True:
+      print('\n' + '-' * 70)
+      print(' MENU CONSULTAR CONTATOS '.center(70, '-'))
+      print('1 - Consultar Todos os Contatos')
+      print('2 - Consultar Contato por Id')
+      print('3 - Consultar Contato(s) por Atividade')
+      print('4 - Retornar ao menu')
+
       try:
         opcao_escolhida =  int(input('>> '))
         if opcao_escolhida == 1:
           print('Todos os contatos:', lista_contatos)
-          break
+          continue
         elif opcao_escolhida == 2:
-          id = input('Qual o id do contato a ser consultado?: ')
-          for contato in lista_contatos:
-            if contato['id_global'] == id:
-              return print(contato)
-          return print('Não há contatos com esse id')
+          id_encontrado = False
+          try:
+            id = int(input('\nQual o id do contato a ser consultado?: '))
+            for contato in lista_contatos:
+              if contato['id_global'] == id:
+                id_encontrado = True
+                print(contato)
+            if id_encontrado == False:
+              print('\nNão há contatos com esse id')
+              continue
+          except: 
+            print('\nOpção inválida, entre com números inteiros')
+            continue
         elif opcao_escolhida == 3:
           contatos_filtrados = []
-          atividade = input('Qual a atividade para aplicar o filtro?: ')
+          atividade = input('\nQual a atividade para aplicar o filtro?: ')
           for contato in lista_contatos:
             if contato['atividade'] == atividade:
               contatos_filtrados.append(contato)
           if len(contatos_filtrados) == 0:
-            return print('Não há contatos com essa atividade')
+             print('Não há contatos com essa atividade')
           else:
             print(f'Filtro de contatos pela atividade {atividade}: \n')
             for i in contatos_filtrados:
-              print(i)
-          return
+              print(i) 
+          continue
         elif opcao_escolhida == 4:
           print('\nRetornando ao menu principal...\n')
-          return mostrar_menu_principal()
+          return main()
         else:
           print('\nOpção inválida, escolha uma opção de 1 a 4')
           continue        
@@ -105,7 +116,36 @@ def consultar_contatos():
         print('\nOpção inválida, escolha uma opção de 1 a 4')
         continue
 
-def mostrar_menu_principal():
+
+def mostrar_menu_cadastrar_contato():
+  print('\n' + '-' * 70)
+  print(' MENU CADASTRAR CONTATO '.center(70, '-'))
+  id = input('Id do Contato: ')
+  cadastrar_contato(id)
+
+def remover_contato():
+  print('\n'+'-' * 70)
+  print(' MENU REMOVER CONTATO '.center(70, '-'))
+  while True:
+    try:
+      id = input('Digite o ID do contato a ser removido: ')
+      id_encontrado = False
+      for contato in lista_contatos:
+        if contato['id_global'] == id:
+            id_encontrado = True
+            lista_contatos.remove(contato)
+            print(f'\nO contato {contato} foi removido com sucesso!\n')
+            main()
+      if id_encontrado == False:
+        print('ID inválido')
+        continue
+    except: 
+      print('\nID inválido')
+      continue
+  
+def main():
+  os.system('cls')
+  print(' Bem vindo a Lista de Contatos do Lohran Fellipe Mendes de Souza '.center(70, '-'))
   print('-' * 70)
   print(' MENU PRINCIPAL '.center(70, '-'))
   print('Escolha a opção desejada:')
@@ -121,10 +161,10 @@ def mostrar_menu_principal():
         mostrar_menu_cadastrar_contato()
         break
       elif opcao_escolhida == 2:
-        mostrar_menu_consultar_contato()
+        consultar_contatos()
         break
       elif opcao_escolhida == 3:
-        mostrar_menu_remover_contato()
+        remover_contato()
         break
       elif opcao_escolhida == 4:
         print('\nEncerrando aplicação...\n')
@@ -135,26 +175,5 @@ def mostrar_menu_principal():
     except:
       print('\nOpção inválida, escolha uma opção de 1 a 4')
       continue
-
-def mostrar_menu_cadastrar_contato():
-  print('\n' + '-' * 70)
-  print(' MENU CADASTRAR CONTATO '.center(70, '-'))
-  id = input('Id do Contato: ')
-  cadastrar_contato(id)
-
-def mostrar_menu_consultar_contato():
-  print('\n' + '-' * 70)
-  print(' MENU CONSULTAR CONTATOS '.center(70, '-'))
-  consultar_contatos()
-
-def mostrar_menu_remover_contato():
-  print('-' * 70)
-  print(' MENU REMOVER CONTATO '.center(70, '-'))
-  print('Digite o ID do contato a ser removido:')
-  
-def main():
-  os.system('cls')
-  print(' Bem vindo a Lista de Contatos do Lohran Fellipe Mendes de Souza '.center(70, '-'))
-  mostrar_menu_principal()
 
 main()
