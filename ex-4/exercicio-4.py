@@ -1,5 +1,3 @@
-import os
-import copy
 # Enunciado: Você e sua equipe de programadores foram contratados por uma pequena empresa para desenvolver um software de gerenciamento de Contatos Comerciais. Este software deve ter o seguinte menu e opções: 
 
 # 1 - Cadastrar Contato 
@@ -47,6 +45,8 @@ import copy
 # 12 - Deve-se apresentar na saída de console uma consulta por código (id) de um dos contados [EXIGÊNCIA DE SAÍDA DE CONSOLE 4 de 6]; 
 # 13 - Deve-se apresentar na saída de console uma consulta por atividade em que 2 contatos exerçam a mesma atividade [EXIGÊNCIA DE SAÍDA DE CONSOLE 5 de 6]; 
 # 14 - Deve-se apresentar na saída de console uma remoção de um dos contatos e em seguida de uma consulta de todos os contatos, provando que o contato foi removido [EXIGÊNCIA DE SAÍDA DE CONSOLE 6 de 6]; 
+import copy
+
 lista_contatos = [
   {'id_global':5031145,'nome': 'Lohran', 'atividade': 'ads', 'telefone':'(12) 99144-0103'}, 
   {'id_global':5031146,'nome': 'nome', 'atividade': 'atividade', 'telefone':'telefone'}, 
@@ -60,9 +60,9 @@ def cadastrar_contato(id):
   telefone = input('Por favor, entre com o telefone do Contato: ')
   contato = {'id_global':id,'nome': nome, 'atividade': atividade, 'telefone':telefone}
 
-  print('\n')
   lista_contatos.append(copy.copy(contato))
-  print(lista_contatos)
+  print('\n')
+  print(f'dados cadastrados com sucesso!: {contato}\n')
   main()
   
 def consultar_contatos():
@@ -120,15 +120,21 @@ def consultar_contatos():
 def mostrar_menu_cadastrar_contato():
   print('\n' + '-' * 70)
   print(' MENU CADASTRAR CONTATO '.center(70, '-'))
-  id = input('Id do Contato: ')
-  cadastrar_contato(id)
+  while True:
+    try:
+      id = int(input('Id do Contato: '))
+      cadastrar_contato(id)
+      break
+    except:
+      print('o id tem que ser valores numéricos!')
+      continue
 
 def remover_contato():
   print('\n'+'-' * 70)
   print(' MENU REMOVER CONTATO '.center(70, '-'))
   while True:
     try:
-      id = input('Digite o ID do contato a ser removido: ')
+      id = int(input('Digite o ID do contato a ser removido: '))
       id_encontrado = False
       for contato in lista_contatos:
         if contato['id_global'] == id:
@@ -138,13 +144,12 @@ def remover_contato():
             main()
       if id_encontrado == False:
         print('ID inválido')
-        continue
+        main()
     except: 
       print('\nID inválido')
-      continue
+      main()
   
 def main():
-  os.system('cls')
   print(' Bem vindo a Lista de Contatos do Lohran Fellipe Mendes de Souza '.center(70, '-'))
   print('-' * 70)
   print(' MENU PRINCIPAL '.center(70, '-'))
@@ -168,7 +173,7 @@ def main():
         break
       elif opcao_escolhida == 4:
         print('\nEncerrando aplicação...\n')
-        break
+        return
       else:
         print('\nOpção inválida, escolha uma opção de 1 a 4')
         continue        
