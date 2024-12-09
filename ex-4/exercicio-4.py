@@ -46,6 +46,7 @@
 # 13 - Deve-se apresentar na saída de console uma consulta por atividade em que 2 contatos exerçam a mesma atividade [EXIGÊNCIA DE SAÍDA DE CONSOLE 5 de 6]; 
 # 14 - Deve-se apresentar na saída de console uma remoção de um dos contatos e em seguida de uma consulta de todos os contatos, provando que o contato foi removido [EXIGÊNCIA DE SAÍDA DE CONSOLE 6 de 6]; 
 import copy
+import os
 
 lista_contatos = [
   {'id_global':5031145,'nome': 'Lohran', 'atividade': 'ads', 'telefone':'(12) 99144-0103'}, 
@@ -141,16 +142,17 @@ def remover_contato():
             id_encontrado = True
             lista_contatos.remove(contato)
             print(f'\nO contato {contato} foi removido com sucesso!\n')
-            main()
+            break
       if id_encontrado == False:
         print('ID inválido')
-        main()
+        break
+      break
     except: 
       print('\nID inválido')
-      main()
+      break
+  main()
   
 def main():
-  print(' Bem vindo a Lista de Contatos do Lohran Fellipe Mendes de Souza '.center(70, '-'))
   print('-' * 70)
   print(' MENU PRINCIPAL '.center(70, '-'))
   print('Escolha a opção desejada:')
@@ -181,4 +183,6 @@ def main():
       print('\nOpção inválida, escolha uma opção de 1 a 4')
       continue
 
+os.system('cls')
+print(' Bem vindo a Lista de Contatos do Lohran Fellipe Mendes de Souza '.center(70, '-'))
 main()
